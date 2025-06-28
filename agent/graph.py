@@ -55,7 +55,7 @@ class Graph:
             logging.error(f"Failed to ingest email: {e}")
             raise ValueError(f"Email ingestion is not enabled: {e}")
     
-    def send_email_node(self) -> ClassifierAgentState:
+    def send_email_node(self, state: ClassifierAgentState) -> ClassifierAgentState:
         if self.llm.state['classification_result'].category != "Spam":
             filename = str(uuid.uuid4())
             with open(f"{self.outgoing_mailbox}/{filename}.txt", "w") as f:

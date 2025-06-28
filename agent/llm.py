@@ -35,7 +35,7 @@ class LLM:
             'action': None
         }
 
-    def classification_node(self) -> ClassifierAgentState:
+    def classification_node(self, state: ClassifierAgentState) -> ClassifierAgentState:
         system_template = """
 You are an expert message classifier. Your task is to categorize messages into one of the following categories:
 - 'Support': For customer inquiries, bug reports, or requests for help.
@@ -67,7 +67,7 @@ You will provide  a confidence level for your classification on a scale of 1 to 
             logging.error(f"Classification failed: {e}")
         return self.state
     
-    def response_node(self) -> ClassifierAgentState:
+    def response_node(self, state: ClassifierAgentState) -> ClassifierAgentState:
         system_template = """
 You are a message router based on message classification. Your task is to send an appropriate response to the user based on the classification.
 - If the classification is 'Support', you will give a preliminary response and direct them to email: khaled.ibrahim@wfp.org for more information.
