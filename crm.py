@@ -25,7 +25,7 @@ class CRM_application:
         else:
             logging.error("Cannot find anthropic_api_key.txt file in working directory.")
 
-        self.graph = Graph(self.llm.claude, self.outgoing_mailbox).build()
+        self.graph = Graph(self.llm.gpt, self.outgoing_mailbox).build()
         if visualize_graph:
             try:
                 self.graph.visualize(filename="workflow_graph")
