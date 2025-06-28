@@ -1,16 +1,32 @@
-from langchain.prompts import PromptTemplate, SystemMessagePromptTemplate, HumanMessagePromptTemplate
+import logging
 from langchain_anthropic import AnthropicLLM
 from .states import ClassificationResult, ClassifierAgentState, MessageResponse
-
+from langchain.prompts import PromptTemplate, SystemMessagePromptTemplate, HumanMessagePromptTemplate
 
 class LLM:
     def __init__(self, anthropic_api_key: str = None):
-        self.claude = AnthropicLLM(
-            model='claude-3-7-sonnet-20250219',
-            anthropic_api_key=anthropic_api_key,
-            temperature=0.0
-        )
+        logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
+        
+        try:
+            self.claude = AnthropicLLM(
+                model='claude-3-7-sonnet-20250219',
+                anthropic_api_key=anthropic_api_key,
+                temperature=0.0
+            )
+            logging.info("AnthropicLLM initialized successfully.")
+        except Exception as e:
+            logging.error(f"Failed to initialize AnthropicLLM: {e}")
+            raise
+        
         self.state: ClassifierAgentState = {
+            'message': None,
+            'classification_result': None,
+            'response': None,
+            'action': None
+        }
+    
+    def reinitialize_state(self):
+        self.state = {
             'message': None,
             'classification_result': None,
             'response': None,
@@ -42,9 +58,11 @@ You will provide  a confidence level for your classification on a scale of 1 to 
             })
             self.state['classification_result'] = classification_result
             self.state['action'] = 'Classification completed successfully'
+            logging.info(f"Message sent by {self.state['message'].sender} classified as {classification_result.category} with confidence {classification_result.confidence}.")
         except Exception as e:
             self.state['classification_result'] = None
             self.state['action'] = f'Classification failed: {e}'
+            logging.error(f"Classification failed: {e}")
         return self.state
     
     def response_node(self) -> ClassifierAgentState:
@@ -73,6 +91,8 @@ The response should be in the format of a formal email response addressing the u
             })
             self.state['response'] = response
             self.state['action'] = 'Response generated successfully'
+            logging.info(f"A response has been generated for the message sent by {self.state['message'].sender} dated {self.state['message'].timestamp}.")
         except Exception as e:
             self.state['action'] = f"Response generation failed: {e}"
+            logging.error(f"Response generation failed: {e}")
         return self.state

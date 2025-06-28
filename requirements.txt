@@ -1,4 +1,6 @@
-langchain_core==0.0.308
+langchain_core
 langchain-anthropic
 langchain
 pydantic
+graphviz
+pygraphviz
