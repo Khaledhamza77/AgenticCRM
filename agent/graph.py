@@ -57,7 +57,7 @@ class Graph:
             return self.llm.state
     
     def build(self) -> StateGraph:
-        workflow = StateGraph(self.llm.state)
+        workflow = StateGraph(ClassifierAgentState)
         workflow.add_node(
             "email_ingestion",
             self.email_ingestion_node
