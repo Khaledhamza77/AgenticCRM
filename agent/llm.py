@@ -1,15 +1,15 @@
 import logging
-from langchain_anthropic import ChatAnthropic
+from langchain_cohere import ChatCohere
 from .states import ClassifierAgentState
 
 class LLM:
-    def __init__(self, anthropic_api_key: str = None):
+    def __init__(self, cohere_api_key: str = None):
         logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
         
         try:
-            self.claude = ChatAnthropic(
-                model='claude-opus-4-20250514',
-                anthropic_api_key=anthropic_api_key,
+            self.command = ChatCohere(
+                model='command-r-plus',
+                cohere_api_key=cohere_api_key,
                 temperature=0.0
             )
             logging.info("AnthropicLLM initialized successfully.")

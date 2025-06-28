@@ -19,13 +19,13 @@ class CRM_application:
 
         logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
 
-        anthropic_api_key = self.get_anthropic_api_key()
-        if anthropic_api_key:
-            self.llm = LLM(anthropic_api_key=anthropic_api_key)
+        cohere_api_key = self.get_cohere_api_key()
+        if cohere_api_key:
+            self.llm = LLM(cohere_api_key=cohere_api_key)
         else:
-            logging.error("Cannot find anthropic_api_key.txt file in working directory.")
+            logging.error("Cannot find cohere_api_key.txt file in working directory.")
 
-        self.graph = Graph(self.llm.claude, self.outgoing_mailbox).build()
+        self.graph = Graph(self.llm.command, self.outgoing_mailbox).build()
         if visualize_graph:
             try:
                 self.graph.visualize(filename="workflow_graph")
@@ -33,13 +33,13 @@ class CRM_application:
             except Exception as e:
                 logging.error(f"Failed to visualize workflow graph: {e}")
     
-    def get_anthropic_api_key(self):
-        api_key_path = os.path.join(self.root, 'anthropic_api_key.txt')
+    def get_cohere_api_key(self):
+        api_key_path = os.path.join(self.root, 'cohere_api_key.txt')
         if os.path.exists(api_key_path):
             with open(api_key_path, 'r') as file:
                 return file.read().strip()
         else:
-            logging.error("Anthropic API key not found.")
+            logging.error("Cohere API key not found.")
             return None
         
     def run(self):
