@@ -21,23 +21,32 @@ class Graph:
                 if line.startswith("message:"):
                     type = line.split(":")[1].strip()
                     self.llm.state['type'] = type
-                    if type == "email":
-                        message = EmailMessage()
-                    elif type == "whatsapp":
-                        message = WhatsappMessage()
-                    else:
-                        raise ValueError(f"Unknown message type: {type}")
                 elif line.startswith("sender:"):
-                    message.sender = line.split(":")[1].strip()
+                    sender = line.split(":")[1].strip()
                 elif line.startswith("subject:"):
                     if isinstance(message, EmailMessage):
-                        message.subject = line.split(":")[1].strip()
+                        subject = line.split(":")[1].strip()
                 elif line.startswith("body:"):
-                    message.body = line.split(":", 1)[1].strip()
+                    body = line.split(":", 1)[1].strip()
                 elif line.startswith("timestamp:"):
-                    message.timestamp = line.split(":")[1].strip()
+                    timestamp = line.split(":")[1].strip()
                 elif line.startswith("name:"):
-                    message.name = line.split(":")[1].strip()
+                    name = line.split(":")[1].strip()
+            if type == "email":
+                message = EmailMessage(
+                    name=name,
+                    subject=subject,
+                    body=body,
+                    sender=sender,
+                    timestamp=timestamp
+                )
+            elif type == "whatsapp":
+                message = WhatsappMessage(
+                    name=name,
+                    body=body,
+                    sender=sender,
+                    timestamp=timestamp
+                )
             self.llm.state['message'] = message
             self.llm.state['action'] = f"Message from {message.sender} ingested successfully."
             logging.info(f"Message from {message.sender} ingested successfully.")
