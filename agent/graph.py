@@ -13,14 +13,14 @@ class Graph:
     
     def email_ingestion_node(self) -> ClassifierAgentState:
         try:
-            with open(self.llm.state.path, "r") as f:
+            with open(self.llm.state['path'], "r") as f:
                 lines = f.readlines()
             
             for line in lines:
                 line = line.strip()
                 if line.startswith("message:"):
                     type = line.split(":")[1].strip()
-                    self.llm.state.type = type
+                    self.llm.state['type'] = type
                     if type == "email":
                         message = EmailMessage()
                     elif type == "whatsapp":
@@ -38,8 +38,8 @@ class Graph:
                     message.timestamp = line.split(":")[1].strip()
                 elif line.startswith("name:"):
                     message.name = line.split(":")[1].strip()
-            self.llm.state.message = message
-            self.llm.state.action = f"Message from {message.sender} ingested successfully."
+            self.llm.state['message'] = message
+            self.llm.state['action'] = f"Message from {message.sender} ingested successfully."
             logging.info(f"Message from {message.sender} ingested successfully.")
             return self.llm.state
         except Exception as e:
@@ -47,13 +47,13 @@ class Graph:
             raise ValueError(f"Email ingestion is not enabled: {e}")
     
     def send_email_node(self) -> ClassifierAgentState:
-        if self.llm.state.classification_result.category != "Spam":
+        if self.llm.state['classification_result'].category != "Spam":
             filename = str(uuid.uuid4())
             with open(f"{self.outgoing_mailbox}/{filename}.txt", "w") as f:
-                f.write(f"To: {self.llm.state.message.sender}\n")
-                f.write(f"Subject: {self.llm.state.classification_result.category} Query Automated Response\n")
-                f.write(f"Body: {self.llm.state.response}\n")
-            self.llm.state.action = f"Email sent to {self.llm.state.message.sender} with filename {filename}.txt"
+                f.write(f"To: {self.llm.state['message'].sender}\n")
+                f.write(f"Subject: {self.llm.state['classification_result'].category} Query Automated Response\n")
+                f.write(f"Body: {self.llm.state['response']}\n")
+            self.llm.state['action'] = f"Email sent to {self.llm.state['message'].sender} with filename {filename}.txt"
             return self.llm.state
     
     def build(self) -> StateGraph:
