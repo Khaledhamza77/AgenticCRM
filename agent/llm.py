@@ -1,5 +1,5 @@
 import logging
-from langchain_openai import OpenAI
+from langchain_openai import ChatOpenAI
 from .states import ClassifierAgentState
 
 class LLM:
@@ -7,8 +7,8 @@ class LLM:
         logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
         
         try:
-            self.claude = OpenAI(
-                model='gpt-4.1',
+            self.gpt = ChatOpenAI(
+                model='gpt-4o',
                 openai_api_key=openai_api_key,
                 temperature=0.0
             )
