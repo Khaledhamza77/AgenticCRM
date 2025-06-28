@@ -8,7 +8,7 @@ from .data import UserLogsDB, UserStatusDB
 class CRM_application:
     def __init__(self, visualize_graph: bool = True, outgoing_mailbox: str = "outgoing_mailbox"):
         self.root= os.getcwd().replace('\\', '/')
-        self.local_dir = f"{self.root}/AgenticCRM"
+        self.local_dir = f"{self.root}/customer_relations_management"
         if os.path.exists(self.local_dir):
             shutil.rmtree(self.local_dir)
             os.makedirs(self.local_dir)
