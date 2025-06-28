@@ -1,20 +1,20 @@
 import logging
-from langchain_openai import ChatOpenAI
+from langchain_anthropic import ChatAnthropic
 from .states import ClassifierAgentState
 
 class LLM:
-    def __init__(self, openai_api_key: str = None):
+    def __init__(self, anthropic_api_key: str = None):
         logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
         
         try:
-            self.gpt = ChatOpenAI(
-                model='gpt-4o',
-                openai_api_key=openai_api_key,
+            self.claude = ChatAnthropic(
+                model='claude-opus-4-20250514',
+                anthropic_api_key=anthropic_api_key,
                 temperature=0.0
             )
-            logging.info("OpenAI initialized successfully.")
+            logging.info("AnthropicLLM initialized successfully.")
         except Exception as e:
-            logging.error(f"Failed to initialize OpenAI: {e}")
+            logging.error(f"Failed to initialize AnthropicLLM: {e}")
             raise
         
         self.state: ClassifierAgentState = {

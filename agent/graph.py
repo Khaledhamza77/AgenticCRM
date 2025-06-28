@@ -6,10 +6,10 @@ from ..messages import EmailMessage, WhatsappMessage
 from langchain.prompts import ChatPromptTemplate, SystemMessagePromptTemplate, HumanMessagePromptTemplate
 
 class Graph:
-    def __init__(self, gpt, outgoing_mailbox):
+    def __init__(self, claude, outgoing_mailbox):
         logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
         
-        self.gpt = gpt
+        self.claude = claude
         self.outgoing_mailbox = outgoing_mailbox
     
     def email_ingestion_node(self, state: ClassifierAgentState) -> ClassifierAgentState:
@@ -83,7 +83,7 @@ You will provide  a confidence level for your classification on a scale of 1 to 
         human_message = HumanMessagePromptTemplate.from_template(human_template)
 
         prompt = ChatPromptTemplate(messages=[system_message, human_message])
-        chain = prompt | self.gpt.with_structured_output(ClassificationResult)
+        chain = prompt | self.claude.with_structured_output(ClassificationResult)
         try:
             classification_result = chain.invoke({
                 "body": state['message'].body
@@ -108,13 +108,13 @@ You are a message router based on message classification. Your task is to send a
 
 In summary, given a message and a classification, you will provide an response message based on the rules above.
 This message should be concise and to the point, providing the user with the necessary information and the next steps.
-The response should be in the format of a formal email response addressing the user by their name and identifying yourself as the sender of the message. You should identify yourself as Khaled GPT, a virtual assistant for the Agentic CRM system."""
+The response should be in the format of a formal email response addressing the user by their name and identifying yourself as the sender of the message. You should identify yourself as Khaled Claude, a virtual assistant for the Agentic CRM system."""
         human_template = "Username:{name}\nMessage body: {body}\nClassification: {classification}"
         system_message = SystemMessagePromptTemplate.from_template(system_template)
         human_message = HumanMessagePromptTemplate.from_template(human_template)
 
         prompt = ChatPromptTemplate(messages=[system_message, human_message])
-        chain = prompt | self.gpt.with_structured_output(MessageResponse)
+        chain = prompt | self.claude.with_structured_output(MessageResponse)
         try:
             response = chain.invoke({
                 "name": state['message'].sender,
