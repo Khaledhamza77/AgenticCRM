@@ -57,4 +57,4 @@ class CRM_application:
         
     def run_single(self, path):
         self.llm.state['path'] = path
-        self.graph.invoke(self.llm.state)
+        self.graph.invoke()
