@@ -82,7 +82,7 @@ You will provide  a confidence level for your classification on a scale of 1 to 
         system_message = SystemMessagePromptTemplate.from_template(system_template)
         human_message = HumanMessagePromptTemplate.from_template(human_template)
 
-        prompt = PromptTemplate.from_messages([system_message, human_message])
+        prompt = PromptTemplate.from_template([system_message, human_message])
         chain = prompt | self.claude.with_structured_output(ClassificationResult)
         try:
             classification_result = chain.invoke({
@@ -113,7 +113,7 @@ The response should be in the format of a formal email response addressing the u
         system_message = SystemMessagePromptTemplate.from_template(system_template)
         human_message = HumanMessagePromptTemplate.from_template(human_template)
 
-        prompt = PromptTemplate.from_messages([system_message, human_message])
+        prompt = PromptTemplate.from_template([system_message, human_message])
         chain = prompt | self.claude.with_structured_output(MessageResponse)
         try:
             response = chain.invoke({
