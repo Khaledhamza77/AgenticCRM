@@ -44,14 +44,14 @@ class CRM_application:
         
     def run(self):
         if not os.path.exists(f"{self.root}/incoming_messages"):
-            logging.error("Incoming mailbox does not exist. Please create an 'incoming_mailbox' directory in the working directory.")
+            logging.error("Incoming mailbox does not exist. Please create an 'incoming_messages' directory in the working directory.")
             return
         else:
             logging.info("Starting CRM application...")
-            incoming_mailbox = f"{self.root}/incoming_mailbox"
-            for filename in os.listdir(incoming_mailbox):
+            incoming_messages = f"{self.root}/incoming_messages"
+            for filename in os.listdir(incoming_messages):
                 if filename.endswith(".txt"):
-                    path = f"{incoming_mailbox}/{filename}"
+                    path = f"{incoming_messages}/{filename}"
                     self.run_single(path)
                     self.llm.reinitialize_state()
         
