@@ -21,7 +21,7 @@ class CRM_application:
 
         anthropic_api_key = self.get_anthropic_api_key()
         if anthropic_api_key:
-            self.llm = LLM(openai_api_key=anthropic_api_key)
+            self.llm = LLM(anthropic_api_key=anthropic_api_key)
         else:
             logging.error("Cannot find anthropic_api_key.txt file in working directory.")
 
