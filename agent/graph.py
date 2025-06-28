@@ -11,7 +11,7 @@ class Graph:
         self.llm = llm
         self.outgoing_mailbox = outgoing_mailbox
     
-    def email_ingestion_node(self) -> ClassifierAgentState:
+    def email_ingestion_node(self, state: ClassifierAgentState) -> ClassifierAgentState:
         try:
             with open(self.llm.state['path'], "r") as f:
                 lines = f.readlines()
