@@ -24,7 +24,7 @@ class Graph:
                 elif line.startswith("sender:"):
                     sender = line.split(":")[1].strip()
                 elif line.startswith("subject:"):
-                    if isinstance(message, EmailMessage):
+                    if type == 'email':
                         subject = line.split(":")[1].strip()
                 elif line.startswith("body:"):
                     body = line.split(":", 1)[1].strip()
