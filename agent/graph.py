@@ -11,18 +11,19 @@ class Graph:
         self.llm = llm
         self.outgoing_mailbox = outgoing_mailbox
     
-    def email_ingestion_node(self, message_path) -> ClassifierAgentState:
+    def email_ingestion_node(self) -> ClassifierAgentState:
         try:
-            with open(message_path, "r") as f:
+            with open(self.llm.state.path, "r") as f:
                 lines = f.readlines()
             
             for line in lines:
                 line = line.strip()
                 if line.startswith("message:"):
                     type = line.split(":")[1].strip()
-                    if type == "Email":
+                    self.llm.state.type = type
+                    if type == "email":
                         message = EmailMessage()
-                    elif type == "Whatsapp":
+                    elif type == "whatsapp":
                         message = WhatsappMessage()
                     else:
                         raise ValueError(f"Unknown message type: {type}")
@@ -38,7 +39,7 @@ class Graph:
                 elif line.startswith("name:"):
                     message.name = line.split(":")[1].strip()
             self.llm.state.message = message
-            self.llm.action = f"Message from {message.sender} ingested successfully."
+            self.llm.state.action = f"Message from {message.sender} ingested successfully."
             logging.info(f"Message from {message.sender} ingested successfully.")
             return self.llm.state
         except Exception as e:

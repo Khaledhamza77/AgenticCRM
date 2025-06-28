@@ -19,7 +19,9 @@ class ClassificationResult(BaseModel):
     )
 
 class ClassifierAgentState(TypedDict):
+    path: str | None
     message: EmailMessage | WhatsappMessage | None
+    type: Literal["email", "whatsapp"] | None
     classification_result: ClassificationResult | None
     response: MessageResponse | None
     action: str | None
