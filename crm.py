@@ -15,7 +15,7 @@ class CRM_application:
         else:
             os.makedirs(self.local_dir)
         self.outgoing_mailbox = f"{self.local_dir}/{outgoing_mailbox}"
-        os.makedirs(self.tobesent_mailbox)
+        os.makedirs(self.outgoing_mailbox)
 
         logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
 
