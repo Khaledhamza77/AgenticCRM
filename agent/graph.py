@@ -137,11 +137,11 @@ The response should be in the format of a formal email response addressing the u
         )
         workflow.add_node(
             "classification_node",
-            self.llm.classification_node
+            self.classification_node
         )
         workflow.add_node(
             "response_node",
-            self.llm.response_node
+            self.response_node
         )
         workflow.add_node(
             "send_email",
