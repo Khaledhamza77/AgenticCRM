@@ -1,9 +1,9 @@
 import os
 import shutil
 import logging
-from agent.llm import LLM
-from agent.graph import Graph
-from data.status import UserStatusDB
+from .agent.llm import LLM
+from .agent.graph import Graph
+from .data import UserLogsDB, UserStatusDB
 
 class CRM_application:
     def __init__(self, visualize_graph: bool = True, outgoing_mailbox: str = "outgoing_mailbox"):

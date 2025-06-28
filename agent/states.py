@@ -1,6 +1,6 @@
 from typing import TypedDict, Literal
 from pydantic import Field, BaseModel
-from messages import EmailMessage, WhatsappMessage
+from ..messages import EmailMessage, WhatsappMessage
 
 class MessageResponse(BaseModel):
     response: str = Field(

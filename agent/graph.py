@@ -2,7 +2,7 @@ import uuid
 import logging
 from .states import ClassifierAgentState
 from langgraph.graph import StateGraph, END
-from messages import EmailMessage, WhatsappMessage
+from ..messages import EmailMessage, WhatsappMessage
 
 class Graph:
     def __init__(self, llm, outgoing_mailbox):
