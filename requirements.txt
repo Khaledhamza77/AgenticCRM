@@ -1,5 +1,5 @@
 langchain_core
-langchain-anthropic
+langchain-openai
 langchain
 pydantic
 graphviz

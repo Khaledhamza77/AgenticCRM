@@ -19,9 +19,9 @@ class CRM_application:
 
         logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
 
-        anthropic_api_key = self.get_anthropic_api_key()
-        if anthropic_api_key:
-            self.llm = LLM(anthropic_api_key=anthropic_api_key)
+        openai_api_key = self.get_openai_api_key()
+        if openai_api_key:
+            self.llm = LLM(openai_api_key=openai_api_key)
         else:
             logging.error("Cannot find anthropic_api_key.txt file in working directory.")
 
@@ -33,13 +33,13 @@ class CRM_application:
             except Exception as e:
                 logging.error(f"Failed to visualize workflow graph: {e}")
     
-    def get_anthropic_api_key(self):
-        api_key_path = os.path.join(self.root, 'anthropic_api_key.txt')
+    def get_openai_api_key(self):
+        api_key_path = os.path.join(self.root, 'openai_api_key.txt')
         if os.path.exists(api_key_path):
             with open(api_key_path, 'r') as file:
                 return file.read().strip()
         else:
-            logging.error("Anthropic API key not found.")
+            logging.error("OpenAI API key not found.")
             return None
         
     def run(self):
