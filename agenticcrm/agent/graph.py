@@ -94,7 +94,7 @@ You are an expert message classifier. Your task is to categorize messages into o
 You will provide a classification of the message based on the provided categories.
 You will provide a brief reason for your classification.
 You will provide  a confidence level for your classification on a scale of 1 to 10, where 10 is very confident and 1 is not confident at all."""
-        human_template = "Message body: {body}"
+        human_template = "From: {sender}\nUser's name: {name}\nMessage body: {body}"
         system_message = SystemMessagePromptTemplate.from_template(system_template)
         human_message = HumanMessagePromptTemplate.from_template(human_template)
 
@@ -102,6 +102,8 @@ You will provide  a confidence level for your classification on a scale of 1 to 
         chain = prompt | self.command.with_structured_output(ClassificationResult)
         try:
             classification_result = chain.invoke({
+                "sender": state['message'].sender,
+                "name": state['message'].name,
                 "body": state['message'].body
             })
             state['classification_result'] = classification_result
@@ -117,9 +119,9 @@ You will provide  a confidence level for your classification on a scale of 1 to 
         )
         self.db_manager.log_user_status(
             user_id=state['user_id'],
-            username=state['message'].sender,
+            username=state['message'].name,
             user_sender_address=state['message'].sender,
-            platform=state['message'].type,
+            platform=state['type'],
             agent_action_id=self.db_manager.agent_actions_db.iloc[-1]['agent_action_id'],
             status=state['classification_result'].category if state['classification_result'] else 'Failed'
         )
