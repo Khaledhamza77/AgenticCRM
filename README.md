@@ -45,12 +45,12 @@ Before running the application, you need to set up your Cohere API key and prepa
     
     Example Message File (message1.txt):
 ```bash
-    message: email
-    sender: john@example.com
-    subject: Question about my billing for subscription
-    name: John Doe
-    body: I was charged twice this month, can you please look into it?
-    timestamp: 2025-06-28 14:15:00
+message: email
+sender: john@example.com
+subject: Question about my billing for subscription
+name: John Doe
+body: I was charged twice this month, can you please look into it?
+timestamp: 2025-06-28 14:15:00
 ```
 
 3. **Run the Application**: Once your API key is set up and messages are prepared, you can run the CRM application from your Python script:
@@ -75,7 +75,7 @@ if __name__ == "__main__":
 ## Package Structure
 
 ```bash
-AgenticCrm/
+agenticcrm/
 ├── __init__.py
 ├── crm.py
 ├── messages.py
@@ -85,6 +85,7 @@ AgenticCrm/
 │   ├── graph.py
 │   └── llm.py
 │   └── states.py
+├── .gitignore
 ├── setup.py
 ├── requirements.txt
 └── README.md
