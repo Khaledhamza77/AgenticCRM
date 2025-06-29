@@ -1,20 +1,20 @@
-    # Python
-    __pycache__/
-    *.pyc
-    *.pyo
-    *.pyd
-    .Python/
-    env/
-    venv/
-    *.egg-info/
-    .pytest_cache/
-    .mypy_cache/
-    .ipynb_checkpoints/
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python/
+env/
+venv/
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ipynb_checkpoints/
 
-    # OS generated files
-    .DS_Store
-    Thumbs.db
+# OS generated files
+.DS_Store
+Thumbs.db
 
-    # Build artifacts
-    dist/
-    build/
+# Build artifacts
+dist/
+build/
