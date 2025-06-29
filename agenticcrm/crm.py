@@ -29,9 +29,11 @@ class CRM_application:
 
         self.graph = Graph(self.llm.command, self.outgoing_mailbox, self.db_manager).build()
         if visualize_graph:
-            from IPython.display import Image, display
             try:
-                display(Image(self.graph.get_graph(xray=True).draw_mermaid_png()))
+                image_data = self.graph.get_graph(xray=True).draw_mermaid_png()
+                image_path = f"{self.local_dir}/graph_image.png"
+                with open(image_path, "wb") as f:
+                    f.write(image_data)
                 logging.info("Graph image generated successfully.")
             except Exception:
                 logging.error("Could not generate graph image. Install graphviz if you want to see it.")
