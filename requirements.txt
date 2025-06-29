@@ -4,4 +4,3 @@ langchain
 langgraph
 pydantic
 graphviz
-pygraphviz
