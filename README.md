@@ -37,7 +37,6 @@ Before running the application, you need to set up your Cohere API key and prepa
 
 2. Prepare Incoming Messages
 The agent processes messages from .txt files. Create a folder (e.g., incoming_messages) in your working directory and place your message files inside it. Each message file should be a .txt file formatted as follows:
-
 Example Message File (message1.txt):
 ```bash
 message: email
@@ -54,10 +53,9 @@ timestamp: 2025-06-28 14:15:00
 - body: The main content of the message.
 - timestamp: The time the message was received (format: YYYY-MM-DD HH:MM:SS).
 
-3. Run the Application
-Once your API key is set up and messages are prepared, you can run the CRM application from your Python script:
+3. **Run the Application**: Once your API key is set up and messages are prepared, you can run the CRM application from your Python script:
+```python
 from agenticcrrm.crm import CRM_application
-```bash
 # Assuming your message files are in a folder like 'incoming_messages'
 # You would likely have a loop or logic to read these files and feed them to the CRM_application
 # For demonstration, CRM_application().run() expects to find these files based on its internal logic.
@@ -67,13 +65,12 @@ if __name__ == "__main__":
     app = CRM_application()
     app.run()
 ```
-
-When you run CRM_application().run(), the following actions will occur:
-- Messages from the designated input folder will be read.
-- The agent will classify each message (General, Sales, Marketing, Support, Spam).
-- An appropriate response will be generated for each classified message.
-- Responses will be saved in customer_relations_management/outgoing_mailbox.
-- user_status.csv and agent_actions.csv will be updated/created in the customer_relations_management folder.
+4. Expected Output: When you run CRM_application().run(), the following actions will occur:
+    - Messages from the designated input folder will be read.
+    - The agent will classify each message (General, Sales, Marketing, Support, Spam).
+    - An appropriate response will be generated for each classified message.
+    - Responses will be saved in customer_relations_management/outgoing_mailbox.
+    - user_status.csv and agent_actions.csv will be updated/created in the customer_relations_management folder.
 
 ## Package Structure
 
