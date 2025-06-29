@@ -32,6 +32,7 @@ class CRM_application:
             from IPython.display import Image, display
             try:
                 display(Image(self.graph.get_graph(xray=True).draw_mermaid_png()))
+                logging.info("Graph image generated successfully.")
             except Exception:
                 logging.error("Could not generate graph image. Install graphviz if you want to see it.")
     
