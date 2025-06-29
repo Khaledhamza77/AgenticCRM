@@ -6,11 +6,12 @@ from ..messages import EmailMessage, WhatsappMessage
 from langchain.prompts import ChatPromptTemplate, SystemMessagePromptTemplate, HumanMessagePromptTemplate
 
 class Graph:
-    def __init__(self, command, outgoing_mailbox):
+    def __init__(self, command, outgoing_mailbox, db_manager):
         logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
         
         self.command = command
         self.outgoing_mailbox = outgoing_mailbox
+        self.db_manager = db_manager
     
     def email_ingestion_node(self, state: ClassifierAgentState) -> ClassifierAgentState:
         try:
@@ -48,8 +49,16 @@ class Graph:
                     sender=sender,
                     timestamp=timestamp
                 )
+            state['user_id'] = self.db_manager.generate_user_id(
+                username=name,
+                user_sender_address=sender
+            )
             state['message'] = message
             state['action'] = f"Message from {message.sender} ingested successfully."
+            self.db_manager.log_agent_action(
+                action=state['action'],
+                user_id=state['user_id']
+            )
             logging.info(f"Message from {message.sender} ingested successfully.")
             return state
         except Exception as e:
@@ -64,7 +73,14 @@ class Graph:
                 f.write(f"Subject: {state['classification_result'].category} Query Automated Response\n")
                 f.write(f"Body: {state['response']}\n")
             state['action'] = f"Email sent to {state['message'].sender} with filename {filename}.txt"
-            return state
+        else:
+            state['action'] = f"No email sent to {state['message'].sender} as the message was classified as Spam."
+            logging.info(f"No email sent to {state['message'].sender} as the message was classified as Spam.")
+        self.db_manager.log_agent_action(
+            action=state['action'],
+            user_id=state['user_id']
+        )
+        return state
     
     def classification_node(self, state: ClassifierAgentState) -> ClassifierAgentState:
         system_template = """
@@ -95,6 +111,18 @@ You will provide  a confidence level for your classification on a scale of 1 to 
             state['classification_result'] = None
             state['action'] = f'Classification failed: {e}'
             logging.error(f"Classification failed: {e}")
+        self.db_manager.log_agent_action(
+            action=state['action'],
+            user_id=state['user_id']
+        )
+        self.db_manager.log_user_status(
+            user_id=state['user_id'],
+            username=state['message'].sender,
+            user_sender_address=state['message'].sender,
+            platform=state['message'].type,
+            agent_action_id=self.db_manager.agent_actions_db.iloc[-1]['agent_action_id'],
+            status=state['classification_result'].category if state['classification_result'] else 'Failed'
+        )
         return state
     
     def response_node(self, state: ClassifierAgentState) -> ClassifierAgentState:
@@ -127,6 +155,10 @@ The response should be in the format of a formal email response addressing the u
         except Exception as e:
             state['action'] = f"Response generation failed: {e}"
             logging.error(f"Response generation failed: {e}")
+        self.db_manager.log_agent_action(
+            action=state['action'],
+            user_id=state['user_id']
+        )
         return state
     
     def build(self) -> StateGraph:

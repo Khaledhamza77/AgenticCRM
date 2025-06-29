@@ -3,7 +3,7 @@ import shutil
 import logging
 from .agent.llm import LLM
 from .agent.graph import Graph
-from .data import UserLogsDB, UserStatusDB
+from .data import DatabaseManager
 
 class CRM_application:
     def __init__(self, visualize_graph: bool = True, outgoing_mailbox: str = "outgoing_mailbox"):
@@ -23,7 +23,7 @@ class CRM_application:
         if cohere_api_key:
             self.llm = LLM(cohere_api_key=cohere_api_key)
         else:
-            logging.error("Cannot find cohere_api_key.txt file in working directory.")
+            logging.error("Cannot find cohere_api_key#.txt file in working directory.")
 
         self.graph = Graph(self.llm.command, self.outgoing_mailbox).build()
         if visualize_graph:
@@ -32,6 +32,8 @@ class CRM_application:
                 logging.info("Workflow graph saved as workflow_graph.png")
             except Exception as e:
                 logging.error(f"Failed to visualize workflow graph: {e}")
+        
+        self.db_manager = DatabaseManager(self.root)
     
     def get_cohere_api_key(self):
         api_key_path = os.path.join(self.root, 'cohere_api_key.txt')
@@ -58,3 +60,4 @@ class CRM_application:
     def run_single(self, path):
         self.llm.state['path'] = path
         self.graph.invoke(self.llm.state)
+        self.db_manager.database_sync()

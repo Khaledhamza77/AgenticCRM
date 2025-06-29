@@ -1,6 +1,7 @@
 langchain_core
-langchain-openai
+langchain-cohere
 langchain
+langgraph
 pydantic
 graphviz
 pygraphviz

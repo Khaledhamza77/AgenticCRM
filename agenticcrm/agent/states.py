@@ -19,6 +19,7 @@ class ClassificationResult(BaseModel):
     )
 
 class ClassifierAgentState(TypedDict):
+    user_id: str | None
     path: str | None
     message: EmailMessage | WhatsappMessage | None
     type: Literal["email", "whatsapp"] | None

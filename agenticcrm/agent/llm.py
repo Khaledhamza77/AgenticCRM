@@ -18,8 +18,10 @@ class LLM:
             raise
         
         self.state: ClassifierAgentState = {
+            'user_id': None,
             'path': None,
             'message': None,
+            'type': None,
             'classification_result': None,
             'response': None,
             'action': None
@@ -27,8 +29,10 @@ class LLM:
     
     def reinitialize_state(self):
         self.state = {
+            'user_id': None,
             'path': None,
             'message': None,
+            'type': None,
             'classification_result': None,
             'response': None,
             'action': None
