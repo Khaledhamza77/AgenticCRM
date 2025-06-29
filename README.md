@@ -37,21 +37,22 @@ Before running the application, you need to set up your Cohere API key and prepa
 
 2. Prepare Incoming Messages
 The agent processes messages from .txt files. Create a folder (e.g., incoming_messages) in your working directory and place your message files inside it. Each message file should be a .txt file formatted as follows:
-Example Message File (message1.txt):
+    
+    Example Message File (message1.txt):
 ```bash
-message: email
-sender: john@example.com
-subject: Question about my billing for subscription
-name: John Doe
-body: I was charged twice this month, can you please look into it?
-timestamp: 2025-06-28 14:15:00
+    message: email
+    sender: john@example.com
+    subject: Question about my billing for subscription
+    name: John Doe
+    body: I was charged twice this month, can you please look into it?
+    timestamp: 2025-06-28 14:15:00
 ```
-- message: Can be email or whatsapp.
-- sender: The sender's email or phone number.
-- subject: (Optional for WhatsApp) The subject of the message.
-- name: The sender's name.
-- body: The main content of the message.
-- timestamp: The time the message was received (format: YYYY-MM-DD HH:MM:SS).
+    - message: Can be email or whatsapp.
+    - sender: The sender's email or phone number.
+    - subject: (Optional for WhatsApp) The subject of the message.
+    - name: The sender's name.
+    - body: The main content of the message.
+    - timestamp: The time the message was received (format: YYYY-MM-DD HH:MM:SS).
 
 3. **Run the Application**: Once your API key is set up and messages are prepared, you can run the CRM application from your Python script:
 ```python
