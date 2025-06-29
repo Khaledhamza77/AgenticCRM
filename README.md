@@ -35,8 +35,13 @@ Before running the application, you need to set up your Cohere API key and prepa
 
 1. Create a plain text file named `cohere_api_key.txt` in your working directory (the directory from which you will run your Python script). This file should contain only your Cohere API key. Visit [LangChain+Cohere API documentation](https://python.langchain.com/docs/integrations/providers/cohere/#chat) for more information.
 
-2. Prepare Incoming Messages
-The agent processes messages from .txt files. Create a folder (e.g., incoming_messages) in your working directory and place your message files inside it. Each message file should be a .txt file formatted as follows:
+2. Prepare Incoming Messages: The agent processes messages from .txt files. Create a folder (e.g., incoming_messages) in your working directory and place your message files inside it. Each message file should be a .txt file formatted as follows
+    -  message: Can be email or whatsapp.
+    - sender: The sender's email or phone number.
+    - subject: (Optional for WhatsApp) The subject of the message.
+    - name: The sender's name.
+    - body: The main content of the message.
+    - timestamp: The time the message was received (format: YYYY-MM-DD HH:MM:SS).
     
     Example Message File (message1.txt):
 ```bash
@@ -47,12 +52,6 @@ The agent processes messages from .txt files. Create a folder (e.g., incoming_me
     body: I was charged twice this month, can you please look into it?
     timestamp: 2025-06-28 14:15:00
 ```
-    - message: Can be email or whatsapp.
-    - sender: The sender's email or phone number.
-    - subject: (Optional for WhatsApp) The subject of the message.
-    - name: The sender's name.
-    - body: The main content of the message.
-    - timestamp: The time the message was received (format: YYYY-MM-DD HH:MM:SS).
 
 3. **Run the Application**: Once your API key is set up and messages are prepared, you can run the CRM application from your Python script:
 ```python
