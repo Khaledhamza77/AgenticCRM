@@ -12,9 +12,9 @@ class LLM:
                 cohere_api_key=cohere_api_key,
                 temperature=0.0
             )
-            logging.info("AnthropicLLM initialized successfully.")
+            logging.info("Cohere's command-r-plus initialized successfully.")
         except Exception as e:
-            logging.error(f"Failed to initialize AnthropicLLM: {e}")
+            logging.error(f"Failed to initialize ChatCohere: {e}")
             raise
         
         self.state: ClassifierAgentState = {
