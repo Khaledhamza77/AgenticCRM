@@ -25,15 +25,15 @@ class CRM_application:
         else:
             logging.error("Cannot find cohere_api_key#.txt file in working directory.")
 
-        self.graph = Graph(self.llm.command, self.outgoing_mailbox).build()
+        self.db_manager = DatabaseManager(self.root)
+
+        self.graph = Graph(self.llm.command, self.outgoing_mailbox, self.db_manager).build()
         if visualize_graph:
             try:
                 self.graph.visualize(filename="workflow_graph")
                 logging.info("Workflow graph saved as workflow_graph.png")
             except Exception as e:
                 logging.error(f"Failed to visualize workflow graph: {e}")
-        
-        self.db_manager = DatabaseManager(self.root)
     
     def get_cohere_api_key(self):
         api_key_path = os.path.join(self.root, 'cohere_api_key.txt')
