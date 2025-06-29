@@ -90,3 +90,6 @@ agenticcrm/
 ├── requirements.txt
 └── README.md
 ```
+
+## Contact Information
+For any inquiries or potential contribution please contact me at: khaledhamza@aucegypt.edu
