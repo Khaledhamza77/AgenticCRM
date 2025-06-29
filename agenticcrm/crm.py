@@ -17,7 +17,7 @@ class CRM_application:
         self.outgoing_mailbox = f"{self.local_dir}/{outgoing_mailbox}"
         os.makedirs(self.outgoing_mailbox)
 
-        logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
+        logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
         cohere_api_key = self.get_cohere_api_key()
         if cohere_api_key:

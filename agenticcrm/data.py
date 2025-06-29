@@ -9,7 +9,7 @@ class DatabaseManager:
         self.agent_actions_db = pd.read_csv(f"{root}/customer_relations_management/agent_actions.csv") if pd.io.common.file_exists(f"{root}/customer_relations_management/agent_actions.csv") else pd.DataFrame(columns=['agent_action_id', 'action', 'user_id', 'timestamp'])
         self.user_status_db = pd.read_csv(f"{root}/customer_relations_management/user_status.csv") if pd.io.common.file_exists(f"{root}/customer_relations_management/user_status.csv") else pd.DataFrame(columns=['user_id', 'username', 'user_sender_address', 'platform', 'agent_action_id', 'status'])
 
-        logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
+        logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
     
     def generate_user_id(self, username: str, user_sender_address: str):
         existing_user = self.user_status_db[

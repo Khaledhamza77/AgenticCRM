@@ -4,7 +4,7 @@ from .states import ClassifierAgentState
 
 class LLM:
     def __init__(self, cohere_api_key: str = None):
-        logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
+        logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
         
         try:
             self.command = ChatCohere(

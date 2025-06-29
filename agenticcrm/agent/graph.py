@@ -7,7 +7,7 @@ from langchain.prompts import ChatPromptTemplate, SystemMessagePromptTemplate, H
 
 class Graph:
     def __init__(self, command, outgoing_mailbox, db_manager):
-        logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
+        logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
         
         self.command = command
         self.outgoing_mailbox = outgoing_mailbox
