@@ -29,11 +29,11 @@ class CRM_application:
 
         self.graph = Graph(self.llm.command, self.outgoing_mailbox, self.db_manager).build()
         if visualize_graph:
+            from IPython.display import Image, display
             try:
-                self.graph.visualize(filename="workflow_graph")
-                logging.info("Workflow graph saved as workflow_graph.png")
-            except Exception as e:
-                logging.error(f"Failed to visualize workflow graph: {e}")
+                display(Image(self.graph.get_graph(xray=True).draw_mermaid_png()))
+            except Exception:
+                logging.error("Could not generate graph image. Install graphviz if you want to see it.")
     
     def get_cohere_api_key(self):
         api_key_path = os.path.join(self.root, 'cohere_api_key.txt')
