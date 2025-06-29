@@ -26,7 +26,7 @@ To get started with the Agentic CRM Message Classifier, you can install it direc
 1. Ensure Git is installed on your system
 2. Install agenticcrm package using the following code:
 ```bash
-pip install git+https://github.com/Khaledhamza77/AgenticCrm.git
+pip install git+https://github.com/Khaledhamza77/AgenticCRM.git
 ```
 This command will install the agenticcrrm package and all its required dependencies listed in requirements.txt.
 
