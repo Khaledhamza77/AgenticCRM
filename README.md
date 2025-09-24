@@ -76,19 +76,19 @@ if __name__ == "__main__":
 
 ```bash
 agenticcrm/
-├── __init__.py
-├── crm.py
-├── messages.py
-├── data.py
 ├── agent/
 │   ├── __init__.py
 │   ├── graph.py
-│   └── llm.py
+│   ├── llm.py
 │   └── states.py
-├── .gitignore
-├── setup.py
-├── requirements.txt
-└── README.md
+├── __init__.py
+├── crm.py
+├── messages.py
+└── data.py
+.gitignore
+setup.py
+requirements.txt
+README.md
 ```
 
 ## Contact Information
